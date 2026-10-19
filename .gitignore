@@ -1,0 +1,28 @@
+# Rust build output
+/target
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# Local env (contains credentials)
+.env
+
+# Per-ticket git worktrees used by /implement-spec
+/.worktrees/
+
+# Exploration notes written by /implement-spec subagents
+/.spec-notes/
+
+# Per-agent git worktrees (Agent tool `isolation: "worktree"`)
+/.claude/worktrees/
+
+# Beads / Dolt files (added by bd init)
+.dolt/
+*.db
+.beads-credential-key
+.beads/proxieddb/
+*.gate.lock*
