@@ -3,7 +3,7 @@
 A cargo subcommand that runs a workspace with every direct dependency at its minimum
 version, without touching the user's `Cargo.toml` or `Cargo.lock`.
 
-- Jira project key: `LAB`
+- Jira project key: `LAB`. Epic for this tool: LAB-14 (commits carry `Refs: LAB-14`).
 - Vocabulary: `GLOSSARY.md`. Decisions: `docs/adr/`. Spec: `docs/specs/cargo-minimum-versions.md`.
 
 <!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:46cd31e7 -->

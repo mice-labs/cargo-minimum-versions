@@ -182,42 +182,11 @@ its own environment so the fixtures resolve their own `target/`.
 cargo-minimum-versions` (remote already set). Cargo.toml keywords:
 `minimal-versions`, `msrv`, `ci`, `cargo-subcommand`.
 
-## Task breakdown
+## Tickets
 
-For a LAB epic, one bead each, `complexity` as marked. Dependencies in order.
-
-1. **Scaffold the crate** (low): `cargo new --bin cargo-minimum-versions` into the
-   existing repo (`README.md`, `GLOSSARY.md`, `CLAUDE.md`, `docs/` are already in
-   place), edition 2024, `rust-version = "1.97"`, dual licence files, keywords, empty
-   CHANGELOG, `.gitignore`.
-2. **CLI with clap** (low): `--bootstrap`, `--all`, `-v/--verbose`, the pass-through
-   tail, help text, `cargo minimum-versions` subcommand argv handling.
-3. **Cargo version and toolchain check** (low): `$CARGO` resolution with `cargo`
-   fallback, parse `cargo --version`, 1.97 floor, `-nightly` detection, bootstrap
-   decision table, unit tests with captured strings including a beta.
-4. **Target directory via cargo_metadata** (low): `--no-deps`, absolute `LOCK` and
-   `BUILD` paths, create parent directory.
-5. **Current graph** (low): `cargo metadata --locked --all-features`, exit 1 with the
-   `cargo generate-lockfile` message on failure.
-6. **Resolve step** (medium): delete stale `LOCK`, `cargo update -Z ...` with the
-   config flag and `RUSTC_BOOTSTRAP=1` whenever `--bootstrap`, stderr pass-through,
-   exit status pass-through.
-7. **Version table** (medium): minimum-graph metadata call, direct dependencies per
-   member through `resolve.nodes`, dedupe by (crate, requirement), summary line,
-   differing rows by default, all rows with `--verbose`, aligned columns on stderr.
-8. **Run step** (low): subcommand with `--locked` and both `--config` flags inserted
-   before the user's args, target-dir env vars stripped from the child; exit status
-   pass-through; `minimum lockfile:` line on failure.
-9. **Fixture workspaces and integration tests** (medium): the six fixture cases and
-   the pass-through tests in the spec, each asserting the user lockfile is untouched.
-10. **CI workflow** (medium): matrix from the spec, dogfood job, weekly nightly
-    schedule, fmt and clippy.
-11. **Release workflow and 0.1.0** (low): tag-triggered `cargo publish`, changelog
-    entry, crates.io publish.
-12. **Issue: forward `--manifest-path` to metadata** (low): file at release, not built.
-13. **Issue: strict no-bootstrap mode** (low): file with the design note, not built.
-14. **Issue: resolve "current" into `target/minimum-versions/current.lock` when there
-    is no committed lockfile** (low): file at release with the trade-off from the
-    spec, not built.
-
-Lower-bound test of this very tool on itself is part of task 10, not a separate bead.
+Implementation tickets are beads under epic bead `cargo-minimum-versions-bz2`
+(Jira LAB-14): `bd children cargo-minimum-versions-bz2` lists them, `bd ready` is the
+frontier. They are tracer-bullet slices, not the layers above: scaffold + pass-through
+run, resolve into the alternate lockfile, CI skeleton, current-lockfile guard, version
+table, version floor and toolchain policy, `--all`, failure paths, full CI matrix,
+release 0.1.0, deferred issues.
